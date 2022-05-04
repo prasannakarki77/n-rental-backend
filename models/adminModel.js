@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 //User Model Collection Create
-const Customer = new mongoose.Schema({
+const Admin = new mongoose.Schema({
   full_name: {
     type: String,
     required: true,
@@ -28,8 +28,8 @@ const Customer = new mongoose.Schema({
     type: String,
     required: true,
   },
-  profile_img:{
+  profile_img: {
     type: String,
-  }
+  },
 });
-module.exports = mongoose.model("Customer", Customer);
+module.exports = mongoose.model("Admin", Admin);
