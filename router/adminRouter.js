@@ -6,6 +6,7 @@ const auth = require("../auth/auth");
 
 //Importing Model
 const Admin = require("../models/adminModel");
+const { HotModuleReplacementPlugin } = require("webpack");
 
 router.post("/admin/register", (req, res) => {
   const username = req.body.username;
@@ -74,4 +75,43 @@ router.post("/admin/login", (req, res) => {
 //   res.json({ msg: "vehicle added deleted" });
 // });
 
+// Dashboard router for admin
+router.get("/admin/dashboard", auth.adminGuard, (req, res) => {
+  //console.log(req.adminInfo.full_name);
+  // res.json(req.adminInfo)
+  res.json({
+    full_name: req.adminInfo.full_name,
+    address: req.adminInfo.address,
+    contact_no: req.adminInfo.contact_no,
+    gender: req.adminInfo.gender,
+    username: req.adminInfo.username,
+    email: req.adminInfo.email,
+  });
+});
+
+
+// Dashboard update route
+router.put("/admin/update", auth.adminGuard, (req, res) => {
+  const id = req.adminInfo._id;
+  const username = req.body.username;
+  const password = req.body.password;
+  const full_name = req.body.full_name;
+  const email = req.body.email;
+  Admin.updateOne(
+    { _id: id },
+    {
+      username: username,
+      full_name: full_name,
+      email: email,
+      password: password,
+    }
+  )
+    .then(() => {
+      res.json({ msg: "data updated" });
+    })
+    .catch();
+});
+
+
 module.exports = router;
+

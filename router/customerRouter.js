@@ -4,6 +4,7 @@ const jwt = require("jsonwebtoken");
 const app = express();
 const router = new express.Router();
 const auth = require("../auth/auth");
+const upload = require("../upload/upload");
 
 //Importing Model
 const Customer = require("../models/customerModel");
@@ -76,4 +77,36 @@ router.delete("/booking/delete", auth.customerGuard, (req, res) => {
   res.json({ msg: "booking deleted" });
 });
 
+// Dashboard router for admin
+router.get("/customer/dashboard", auth.customerGuard, (req, res) => {
+  //console.log(req.adminInfo.full_name);
+  // res.json(req.adminInfo)
+  res.json({
+    full_name: req.customerInfo.full_name,
+    address: req.customerInfo.address,
+    contact_no: req.customerInfo.contact_no,
+    gender: req.customerInfo.gender,
+    username: req.customerInfo.username,
+    email: req.customerInfo.email,
+  });
+});
+
+router.put(
+  "/customer/update_profile_img",
+  auth.customerGuard,
+  upload.single("cust_img"),
+  (req, res) => {
+    res.send({ msg: "test" });
+    Customer.updateOne(
+      { _id: req.customerInfo._id },
+      { profile_img: req.file.filename }
+    )
+      .then()
+      .catch();
+  }
+);
+
 module.exports = router;
+
+
+
