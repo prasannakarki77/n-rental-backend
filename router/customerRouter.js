@@ -96,7 +96,10 @@ router.put(
   auth.customerGuard,
   upload.single("cust_img"),
   (req, res) => {
-    res.send({ msg: "test" });
+    console.log(req.file);
+    if (req.file == undefined) {
+      return res.json({ msg: "Invalid file type" });
+    }
     Customer.updateOne(
       { _id: req.customerInfo._id },
       { profile_img: req.file.filename }
@@ -107,6 +110,3 @@ router.put(
 );
 
 module.exports = router;
-
-
-
