@@ -10,8 +10,10 @@ require("./db_connection/dbconnection");
 const customerRouter = require("./router/customerRouter");
 const adminRouter = require("./router/adminRouter");
 const vehicleRouter = require("./router/vehicleRouter");
+const categoryRouter = require("./router/categoryRouter");
 app.use(customerRouter);
 app.use(adminRouter);
 app.use(vehicleRouter);
+app.use(categoryRouter);
 
 app.listen(90);
