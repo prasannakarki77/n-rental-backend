@@ -7,29 +7,30 @@ const auth = require("../auth/auth");
 const upload = require("../upload/upload");
 
 //Importing Model
-const Customer = require("../models/customerModel");
+const User = require("../models/userModel");
 
-router.post("/customer/register", (req, res) => {
+router.post("/user/register", (req, res) => {
   const username = req.body.username;
-  Customer.findOne({ username: username })
-    .then((cust_data) => {
-      if (cust_data != null) {
+  User.findOne({ username: username })
+    .then((user_data) => {
+      if (user_data != null) {
         res.json({ msg: "username already exist" });
         return;
       }
-
-      const full_name = req.body.full_name;
+      const firstname = req.body.firstname;
+      const lastname = req.body.lastname;
       const address = req.body.address;
-      const contact_no = req.body.contact_no;
+      const phone = req.body.phone;
       const gender = req.body.gender;
       const email = req.body.email;
       const password = req.body.password;
 
       bcryptjs.hash(password, 10, (e, hashed_pw) => {
-        const data = new Customer({
-          full_name: full_name,
+        const data = new User({
+          firstname: firstname,
+          lastname: lastname,
           address: address,
-          contact_no: contact_no,
+          phone: phone,
           gender: gender,
           username: username,
           email: email,
@@ -50,22 +51,22 @@ router.post("/customer/register", (req, res) => {
 
 // For login
 
-router.post("/customer/login", (req, res) => {
+router.post("/user/login", (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
-  Customer.findOne({ username: username })
-    .then((cust_data) => {
-      if (cust_data == null) {
+  User.findOne({ username: username })
+    .then((user_data) => {
+      if (user_data == null) {
         res.json({ msg: "Invalid Credentials" });
         return;
       }
-      bcryptjs.compare(password, cust_data.password, (e, result) => {
+      bcryptjs.compare(password, user_data.password, (e, result) => {
         if (result == false) {
           res.json({ msg: "Invalid Credential" });
           return;
         }
         // Creating token for logged in user
-        const token = jwt.sign({ customerId: cust_data._id }, "nrental");
+        const token = jwt.sign({ userId: user_data._id }, "nrental");
         res.json({ token: token });
       });
     })
@@ -73,35 +74,36 @@ router.post("/customer/login", (req, res) => {
 });
 
 // for testing token
-router.delete("/booking/delete", auth.customerGuard, (req, res) => {
+router.delete("/booking/delete", auth.userGuard, (req, res) => {
   res.json({ msg: "booking deleted" });
 });
 
 // Dashboard router for admin
-router.get("/customer/dashboard", auth.customerGuard, (req, res) => {
+router.get("/user/dashboard", auth.userGuard, (req, res) => {
   //console.log(req.adminInfo.full_name);
   // res.json(req.adminInfo)
   res.json({
-    full_name: req.customerInfo.full_name,
-    address: req.customerInfo.address,
-    contact_no: req.customerInfo.contact_no,
-    gender: req.customerInfo.gender,
-    username: req.customerInfo.username,
-    email: req.customerInfo.email,
+    firstname: req.userInfo.firstname,
+    lastname: req.userInfo.lastname,
+    address: req.userInfo.address,
+    phone: req.userInfo.phone,
+    gender: req.userInfo.gender,
+    username: req.userInfo.username,
+    email: req.userInfo.email,
   });
 });
 
 router.put(
-  "/customer/update_profile_img",
-  auth.customerGuard,
-  upload.single("cust_img"),
+  "/user/update_profile_img",
+  auth.userGuard,
+  upload.single("user_img"),
   (req, res) => {
     console.log(req.file);
     if (req.file == undefined) {
       return res.json({ msg: "Invalid file type" });
     }
-    Customer.updateOne(
-      { _id: req.customerInfo._id },
+    User.updateOne(
+      { _id: req.userInfo._id },
       { profile_img: req.file.filename }
     )
       .then()

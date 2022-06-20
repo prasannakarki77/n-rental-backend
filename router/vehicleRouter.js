@@ -30,7 +30,7 @@ router.post(
     data
       .save()
       .then(() => {
-        res.json({ msg: "Vehicle added" });
+        res.json({ msg: "Vehicle added", success: true });
       })
       .catch((e) => {
         res.json({ e });
@@ -56,7 +56,7 @@ router.put(
       }
     )
       .then(() => {
-        res.json({ msg: "vehicle update" });
+        res.json({ msg: "vehicle update", success: true });
       })
       .catch((e) => {
         res.json({ e });
@@ -74,4 +74,29 @@ router.delete("/vehicle/delete/:id", auth.adminGuard, (req, res) => {
     });
 });
 
+router.get("/vehicle/get", (req, res) => {
+  Vehicle.find()
+    .then((vehicle) => {
+      if (vehicle != null) {
+        res.status(201).json({
+          success: true,
+
+          data: vehicle,
+        });
+      }
+    })
+    .catch((e) => {
+      res.json({
+        msg: e,
+      });
+    });
+});
+
+router.get("/vehicle/dashboard", auth.adminGuard, async (req, res) => {
+  const vehicleList = await Vehicle.find({});
+  res.json({
+    success: true,
+    data: vehicleList,
+  });
+});
 module.exports = router;

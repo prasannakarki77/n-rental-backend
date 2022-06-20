@@ -1,19 +1,18 @@
 const jwt = require("jsonwebtoken");
-const customer = require("../models/customerModel");
+const User = require("../models/userModel");
 const admin = require("../models/adminModel");
 
-// Customer Guard
-module.exports.customerGuard = (req, res, next) => {
+// User Guard
+module.exports.userGuard = (req, res, next) => {
   try {
     const token = req.headers.authorization.split(" ")[1];
     const data = jwt.verify(token, "nrental");
-    console.log(data);
-    customer
-      .findOne({
-        _id: data.customerId,
-      })
-      .then((cdata) => {
-        req.customerInfo = cdata;
+    // console.log(data);
+    User.findOne({
+      _id: data.userId,
+    })
+      .then((user_data) => {
+        req.userInfo = user_data;
         next();
       })
       .catch((e) => {
@@ -24,13 +23,12 @@ module.exports.customerGuard = (req, res, next) => {
   }
 };
 
-
 // Admin Guard
 module.exports.adminGuard = (req, res, next) => {
   try {
     const token = req.headers.authorization.split(" ")[1];
     const data = jwt.verify(token, "nrental");
-    console.log(data);
+    // console.log(data);
     admin
       .findOne({
         _id: data.adminId,
