@@ -37,8 +37,9 @@ router.post(
       });
   }
 );
+
 router.put(
-  "/vehicle/update",
+  "/vehicle/update_image",
   auth.adminGuard,
   upload.single("v_img"),
   (req, res) => {
@@ -49,14 +50,11 @@ router.put(
     Vehicle.updateOne(
       { _id: req.body._id },
       {
-        vehicle_name: req.body.vehicle_name,
         vehicle_image: req.file.filename,
-        vehicle_desc: req.body.vehicle_desc,
-        vehicle_company: req.body.vehicle_company,
       }
     )
       .then(() => {
-        res.json({ msg: "vehicle update", success: true });
+        res.json({ msg: "vehicle image updated", success: true });
       })
       .catch((e) => {
         res.json({ e });
@@ -64,10 +62,63 @@ router.put(
   }
 );
 
+router.put("/vehicle/update", auth.userGuard, (req, res) => {
+  Vehicle.updateOne(
+    { _id: req.body._id },
+    {
+      vehicle_name: req.body.vehicle_name,
+      vehicle_desc: req.body.vehicle_desc,
+      vehicle_company: req.body.vehicle_company,
+      vehicle_category: req.body.vehicle_category,
+      vehicle_sku: req.body.vehicle_sku,
+      booking_cost: req.body.booking_cost,
+    }
+  )
+    .then(() => {
+      res.json({ msg: "vehicle updated", success: true });
+    })
+    .catch((e) => {
+      res.json({ e });
+    });
+});
+
+// router.put(
+//   "/vehicle/update",
+//   auth.adminGuard,
+//   // upload.single("v_img"),
+//   (req, res) => {
+//     // console.log(req.file);
+//     // if (req.file == undefined) {
+//     //   return res.json({ msg: "Invalid file type" });
+//     // }
+//     Vehicle.updateOne(
+//       { _id: req.body._id },
+//       {
+//         vehicle_name: req.body.vehicle_name,
+//         vehicle_desc: req.body.vehicle_desc,
+//         vehicle_company: req.body.vehicle_company,
+//         vehicle_category: req.body.vehicle_category,
+//         vehicle_sku: req.body.vehicle_sku,
+//         booking_cost: req.body.booking_cost,
+//         // vehicle_image: req.file.filename,
+//       }
+//     )
+//       .then(() => {
+//         res.json({ msg: "vehicle updated", success: true });
+//       })
+//       .catch((e) => {
+//         res.json({ e });
+//       });
+//   }
+// );
+
 router.delete("/vehicle/delete/:id", auth.adminGuard, (req, res) => {
   Vehicle.deleteOne({ _id: req.params.id })
     .then(() => {
-      res.json("vehicle deleted");
+      res.json({
+        success: true,
+        msg: "vehicle deleted",
+      });
     })
     .catch((e) => {
       res.json({ e });
