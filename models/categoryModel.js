@@ -7,8 +7,11 @@ const Category = new mongoose.Schema({
   },
   category_image: {
     type: String,
-  
   },
+  category_desc:{
+    type:String,
+    required:true,
+  }
 });
 
 module.exports = mongoose.model("Category", Category);

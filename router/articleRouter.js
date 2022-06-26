@@ -15,7 +15,9 @@ router.post(
       description: req.body.description,
       rich_description: req.body.rich_description,
       image: req.file.filename,
+      is_featured: req.body.is_featured,
     });
+    console.log(data);
     data
       .save()
       .then(() => {
@@ -59,6 +61,7 @@ router.put("/article/update", auth.userGuard, (req, res) => {
       date: req.body.date,
       description: req.body.description,
       rich_description: req.body.rich_description,
+      is_featured: req.body.is_featured,
     }
   )
     .then(() => {
@@ -82,7 +85,7 @@ router.delete("/article/delete/:id", auth.adminGuard, (req, res) => {
     });
 });
 
-router.get("/article/dashboard", (req, res) => {
+router.get("/article/get", auth.adminGuard, (req, res) => {
   Article.find()
     .then((articleList) => {
       if (articleList != null) {

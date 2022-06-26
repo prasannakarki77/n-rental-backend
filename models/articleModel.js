@@ -8,6 +8,7 @@ const Article = new mongoose.Schema({
   },
   date: {
     type: String,
+    required: true,
   },
   description: {
     type: String,
@@ -15,6 +16,10 @@ const Article = new mongoose.Schema({
   },
   rich_description: {
     type: String,
+    required: true,
+  },
+  is_featured: {
+    type: Boolean,
     required: true,
   },
   image: {

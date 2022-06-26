@@ -10,20 +10,38 @@ router.post(
   upload.single("c_img"),
   (req, res) => {
     const category_name = req.body.category_name;
+    const category_desc = req.body.category_desc;
     const category_image = req.file.filename;
     const data = new Category({
       category_name: category_name,
+      category_desc: category_desc,
       category_image: category_image,
     });
     data
       .save()
-      .then(() => res.json({ msg: "Category added" }))
+      .then(() => res.json({ msg: "Category added", success: true }))
       .catch((e) => res.json({ msg: e }));
   }
 );
 
+router.put("/category/update", auth.adminGuard, (req, res) => {
+  Category.updateOne(
+    { _id: req.body._id },
+    {
+      category_name: req.body.category_name,
+      category_desc: req.body.category_desc,
+    }
+  )
+    .then(() => {
+      res.json({ msg: "Category updated", success: true });
+    })
+    .catch((e) => {
+      res.json({ e });
+    });
+});
+
 router.put(
-  "/category/update",
+  "/category/update_image",
   auth.adminGuard,
   upload.single("c_img"),
   (req, res) => {
@@ -34,12 +52,11 @@ router.put(
     Category.updateOne(
       { _id: req.body._id },
       {
-        category_name: req.body.category_name,
         category_image: req.file.filename,
       }
     )
       .then(() => {
-        res.json({ msg: "Category update" });
+        res.json({ msg: "category image updated", success: true });
       })
       .catch((e) => {
         res.json({ e });
@@ -47,10 +64,28 @@ router.put(
   }
 );
 
+router.get("/category/get", auth.adminGuard, (req, res) => {
+  Category.find()
+    .then((categoryList) => {
+      if (categoryList != null) {
+        res.status(201).json({
+          success: true,
+
+          data: categoryList,
+        });
+      }
+    })
+    .catch((e) => {
+      res.json({
+        msg: e,
+      });
+    });
+});
+
 router.delete("/category/delete/:id", auth.adminGuard, (req, res) => {
   Category.deleteOne({ _id: req.params.id })
     .then(() => {
-      res.json("Category deleted");
+      res.json({ msg: "Category deleted", success: true });
     })
     .catch((e) => {
       res.json({ e });

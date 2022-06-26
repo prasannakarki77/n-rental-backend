@@ -13,10 +13,12 @@ const adminRouter = require("./router/adminRouter");
 const vehicleRouter = require("./router/vehicleRouter");
 const categoryRouter = require("./router/categoryRouter");
 const favouriteRouter = require("./router/favouriteRouter");
+const articleRouter = require("./router/articleRouter");
 app.use(userRouter);
 app.use(adminRouter);
 app.use(vehicleRouter);
 app.use(categoryRouter);
 app.use(favouriteRouter);
+app.use(articleRouter);
 
 app.listen(90);
