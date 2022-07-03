@@ -35,6 +35,7 @@ router.post("/user/register", (req, res) => {
           username: username,
           email: email,
           password: hashed_pw,
+          userType: "user",
         });
         data
           .save()
@@ -67,7 +68,7 @@ router.post("/user/login", (req, res) => {
         }
         // Creating token for logged in user
         const token = jwt.sign({ userId: user_data._id }, "nrental");
-        res.json({ token: token });
+        res.json({ token: token, userType: user_data.userType });
       });
     })
     .catch();

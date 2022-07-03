@@ -13,6 +13,8 @@ router.post(
     const vehicle_category = req.body.vehicle_category;
     const vehicle_company = req.body.vehicle_company;
     const vehicle_desc = req.body.vehicle_desc;
+    const vehicle_rich_desc = req.body.vehicle_rich_desc;
+    const is_featured = req.body.is_featured;
     const booking_cost = req.body.booking_cost;
     const vehicle_sku = req.body.vehicle_sku;
     const vehicle_image = req.file.filename;
@@ -22,6 +24,8 @@ router.post(
       vehicle_category: vehicle_category,
       vehicle_company: vehicle_company,
       vehicle_desc: vehicle_desc,
+      vehicle_rich_desc: vehicle_rich_desc,
+      is_featured: is_featured,
       vehicle_sku: vehicle_sku,
       booking_cost: booking_cost,
       vehicle_image: vehicle_image,
@@ -68,6 +72,8 @@ router.put("/vehicle/update", auth.userGuard, (req, res) => {
     {
       vehicle_name: req.body.vehicle_name,
       vehicle_desc: req.body.vehicle_desc,
+      vehicle_rich_desc: req.body.vehicle_rich_desc,
+      is_featured: req.body.is_featured,
       vehicle_company: req.body.vehicle_company,
       vehicle_category: req.body.vehicle_category,
       vehicle_sku: req.body.vehicle_sku,
@@ -149,5 +155,19 @@ router.get("/vehicle/dashboard", auth.adminGuard, async (req, res) => {
     success: true,
     data: vehicleList,
   });
+});
+
+router.get("/vehicle/:id", (req, res) => {
+  Vehicle.findOne({ _id: req.params.id })
+
+    .then((data) => {
+      res.json({ success: true, data: data });
+    })
+
+    .catch((e) => {
+      res.json({
+        msg: e,
+      });
+    });
 });
 module.exports = router;

@@ -17,6 +17,14 @@ const Vehicle = new mongoose.Schema({
     type: String,
     required: true,
   },
+  vehicle_rich_desc: {
+    type: String,
+    required: true,
+  },
+  is_featured: {
+    type: Boolean,
+    required: true,
+  },
   booking_cost: {
     type: String,
     required: true,
@@ -29,6 +37,7 @@ const Vehicle = new mongoose.Schema({
     type: String,
     required: true,
   },
+
   //   userId:{
   //       type: mongoose.Schema.Types.ObjectId,
   //       ref: 'Customer'

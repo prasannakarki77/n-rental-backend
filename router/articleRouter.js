@@ -53,6 +53,20 @@ router.put(
   }
 );
 
+router.get("/article/single/:id", (req, res) => {
+  Article.findOne({ _id: req.params.id })
+
+    .then((data) => {
+      res.json({ data: data });
+    })
+
+    .catch((e) => {
+      res.json({
+        msg: e,
+      });
+    });
+});
+
 router.put("/article/update", auth.userGuard, (req, res) => {
   Article.updateOne(
     { _id: req.body._id },
@@ -85,14 +99,14 @@ router.delete("/article/delete/:id", auth.adminGuard, (req, res) => {
     });
 });
 
-router.get("/article/get", auth.adminGuard, (req, res) => {
+router.get("/article/get", (req, res) => {
   Article.find()
-    .then((articleList) => {
-      if (articleList != null) {
+    .then((article) => {
+      if (article != null) {
         res.status(201).json({
           success: true,
 
-          data: articleList,
+          data: article,
         });
       }
     })
