@@ -91,6 +91,7 @@ router.get("/user/dashboard", auth.userGuard, (req, res) => {
     gender: req.userInfo.gender,
     username: req.userInfo.username,
     email: req.userInfo.email,
+    profile_img: req.userInfo.profile_img,
   });
 });
 
@@ -107,9 +108,34 @@ router.put(
       { _id: req.userInfo._id },
       { profile_img: req.file.filename }
     )
-      .then()
-      .catch();
+      .then(() => {
+        res.json({ msg: "vehicle image updated", success: true });
+      })
+      .catch((e) => {
+        res.json({ e });
+      });
   }
 );
+
+router.put("/user/update_profile", auth.userGuard, (req, res) => {
+  User.updateOne(
+    { _id: req.userInfo._id },
+    {
+      firstname: req.body.firstname,
+      lastname: req.body.lastname,
+      address: req.body.address,
+      phone: req.body.phone,
+      gender: req.body.gender,
+      username: req.body.username,
+      email: req.body.email,
+    }
+  )
+    .then(() => {
+      res.json({ msg: "Profile updated", success: true });
+    })
+    .catch((e) => {
+      res.json({ e });
+    });
+});
 
 module.exports = router;
