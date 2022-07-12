@@ -92,6 +92,7 @@ router.get("/user/dashboard", auth.userGuard, (req, res) => {
     username: req.userInfo.username,
     email: req.userInfo.email,
     profile_img: req.userInfo.profile_img,
+    userType: req.userInfo.userType,
   });
 });
 
@@ -137,5 +138,7 @@ router.put("/user/update_profile", auth.userGuard, (req, res) => {
       res.json({ e });
     });
 });
+
+
 
 module.exports = router;

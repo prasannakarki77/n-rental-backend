@@ -14,11 +14,15 @@ const vehicleRouter = require("./router/vehicleRouter");
 const categoryRouter = require("./router/categoryRouter");
 const favouriteRouter = require("./router/favouriteRouter");
 const articleRouter = require("./router/articleRouter");
+const bookingRouter = require("./router/bookingRouter");
+const reviewRouter = require("./router/reviewRouter");
 app.use(userRouter);
 app.use(adminRouter);
 app.use(vehicleRouter);
 app.use(categoryRouter);
 app.use(favouriteRouter);
 app.use(articleRouter);
+app.use(bookingRouter);
+app.use(reviewRouter);
 
 app.listen(90);
