@@ -66,4 +66,23 @@ router.get("/booking/get", auth.userGuard, (req, res) => {
       });
     });
 });
+
+router.put("/booking/update/:id", auth.userGuard, (req, res) => {
+  Booking.updateOne(
+    { _id: req.params.id },
+    {
+      no_of_days: req.body.no_of_days,
+      booking_date: req.body.booking_date,
+      booking_time: req.body.booking_time,
+      address: req.body.address,
+      contact_no: req.body.contact_no,
+    }
+  )
+    .then(() => {
+      res.status(201).json({ msg: "Booking updated", success: true });
+    })
+    .catch((e) => {
+      res.json({ e });
+    });
+});
 module.exports = router;
