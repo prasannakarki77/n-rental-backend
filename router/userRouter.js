@@ -10,7 +10,9 @@ const upload = require("../upload/upload");
 const User = require("../models/userModel");
 
 router.post("/user/register", (req, res) => {
+  console.log(req.body.username);
   const username = req.body.username;
+  console.log(username);
   User.findOne({ username: username })
     .then((user_data) => {
       if (user_data != null) {
@@ -40,7 +42,7 @@ router.post("/user/register", (req, res) => {
         data
           .save()
           .then(() => {
-            res.json({ msg: "Registered" });
+            res.status(201).json({ msg: "Registered" });
           })
           .catch((e) => {
             res.json({ e });
@@ -83,7 +85,7 @@ router.delete("/booking/delete", auth.userGuard, (req, res) => {
 router.get("/user/dashboard", auth.userGuard, (req, res) => {
   //console.log(req.adminInfo.full_name);
   // res.json(req.adminInfo)
-  res.json({
+  res.status(201).json({
     firstname: req.userInfo.firstname,
     lastname: req.userInfo.lastname,
     address: req.userInfo.address,
@@ -93,6 +95,25 @@ router.get("/user/dashboard", auth.userGuard, (req, res) => {
     email: req.userInfo.email,
     profile_img: req.userInfo.profile_img,
     userType: req.userInfo.userType,
+  });
+});
+// Dashboard router for admin
+router.get("/user/get", auth.userGuard, (req, res) => {
+  //console.log(req.adminInfo.full_name);
+  // res.json(req.adminInfo)
+  res.status(201).json({
+    success: true,
+    data: {
+      firstname: req.userInfo.firstname,
+      lastname: req.userInfo.lastname,
+      address: req.userInfo.address,
+      phone: req.userInfo.phone,
+      gender: req.userInfo.gender,
+      username: req.userInfo.username,
+      email: req.userInfo.email,
+      profile_img: req.userInfo.profile_img,
+      userType: req.userInfo.userType,
+    },
   });
 });
 
@@ -110,7 +131,7 @@ router.put(
       { profile_img: req.file.filename }
     )
       .then(() => {
-        res.json({ msg: "vehicle image updated", success: true });
+        res.status(201).json({ msg: "vehicle image updated", success: true });
       })
       .catch((e) => {
         res.json({ e });
@@ -132,13 +153,11 @@ router.put("/user/update_profile", auth.userGuard, (req, res) => {
     }
   )
     .then(() => {
-      res.json({ msg: "Profile updated", success: true });
+      res.status(201).json({ msg: "Profile updated", success: true });
     })
     .catch((e) => {
       res.json({ e });
     });
 });
-
-
 
 module.exports = router;

@@ -18,14 +18,14 @@ router.post("/booking/add/:vehicle_id", auth.userGuard, (req, res) => {
   });
   data
     .save()
-    .then(() => res.json({ msg: "Vehicle Booked ", success: true }))
+    .then(() => res.status(201).json({ msg: "Vehicle Booked ", success: true }))
     .catch((e) => res.json({ msg: e }));
 });
 
 router.delete("/booking/delete/:id", auth.userGuard, (req, res) => {
   Booking.deleteOne({ _id: req.params.id })
     .then(() => {
-      res.json({ msg: "Booking Deleted ", success: true });
+      res.status(201).json({ msg: "Booking Deleted ", success: true });
     })
     .catch((e) => {
       res.json({ e });
