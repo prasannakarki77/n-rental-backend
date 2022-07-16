@@ -52,6 +52,24 @@ router.get("/user/booking/get", auth.userGuard, (req, res) => {
 router.get("/booking/get", auth.userGuard, (req, res) => {
   Booking.find()
     .populate("vehicle_id")
+    .populate("user_id")
+    .then((booking) => {
+      if (booking != null) {
+        res.status(201).json({
+          success: true,
+          data: booking,
+        });
+      }
+    })
+    .catch((e) => {
+      res.json({
+        msg: e,
+      });
+    });
+});
+router.get("/booking/get/details/:id", auth.userGuard, (req, res) => {
+  Booking.findOne({ _id: req.params.id })
+    .populate("vehicle_id")
     .then((booking) => {
       if (booking != null) {
         res.status(201).json({
@@ -71,6 +89,7 @@ router.put("/booking/update/:id", auth.userGuard, (req, res) => {
   Booking.updateOne(
     { _id: req.params.id },
     {
+      vehicle_id: req.body.vehicle_id,
       no_of_days: req.body.no_of_days,
       booking_date: req.body.booking_date,
       booking_time: req.body.booking_time,
@@ -80,6 +99,20 @@ router.put("/booking/update/:id", auth.userGuard, (req, res) => {
   )
     .then(() => {
       res.status(201).json({ msg: "Booking updated", success: true });
+    })
+    .catch((e) => {
+      res.json({ e });
+    });
+});
+router.put("/booking/update/status/:id", auth.userGuard, (req, res) => {
+  Booking.updateOne(
+    { _id: req.params.id },
+    {
+      status: req.body.status,
+    }
+  )
+    .then(() => {
+      res.status(201).json({ msg: "Booking status updated", success: true });
     })
     .catch((e) => {
       res.json({ e });
