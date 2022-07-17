@@ -12,17 +12,37 @@ router.post("/favourite/insert/:vehicle_id", auth.userGuard, (req, res) => {
   });
   data
     .save()
-    .then(() => res.json({ msg: "Added to favourites" }))
+    .then(() =>
+      res.status(201).json({ msg: "Added to favourites", success: true })
+    )
     .catch((e) => res.json({ msg: e }));
 });
 
 router.delete("/favourite/delete/:id", auth.userGuard, (req, res) => {
   Favourite.deleteOne({ _id: req.params.id })
     .then(() => {
-      res.json("Removed from favourite");
+      res.staus(201).json({ msg: "Added to favourites", success: true });
     })
     .catch((e) => {
-      res.json({ e });
+      res.json({ msg: e });
+    });
+});
+
+router.get("/favourite/get", auth.userGuard, (req, res) => {
+  Review.find({ user_id: req.userInfo._id })
+    .populate("vehicle_id")
+    .then((favourite) => {
+      if (favourite != null) {
+        res.status(201).json({
+          success: true,
+          data: favourite,
+        });
+      }
+    })
+    .catch((e) => {
+      res.json({
+        msg: e,
+      });
     });
 });
 

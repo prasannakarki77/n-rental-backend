@@ -14,7 +14,7 @@ router.post("/review/insert/:vehicle_id", auth.userGuard, (req, res) => {
   });
   data
     .save()
-    .then(() => res.json({ msg: "Review Added", success: true }))
+    .then(() => res.status(201).json({ msg: "Review Added", success: true }))
     .catch((e) => res.json({ msg: e }));
 });
 
