@@ -148,6 +148,23 @@ router.get("/vehicle/get", (req, res) => {
       });
     });
 });
+router.get("/vehicle/get/featured", (req, res) => {
+  Vehicle.find({ is_featured: true })
+    .then((vehicle) => {
+      if (vehicle != null) {
+        res.status(201).json({
+          success: true,
+
+          data: vehicle,
+        });
+      }
+    })
+    .catch((e) => {
+      res.json({
+        msg: e,
+      });
+    });
+});
 
 router.get("/vehicle/dashboard", auth.adminGuard, async (req, res) => {
   const vehicleList = await Vehicle.find({});
