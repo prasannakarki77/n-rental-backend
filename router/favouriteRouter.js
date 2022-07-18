@@ -4,7 +4,7 @@ const Favourite = require("../models/favouriteModel");
 const auth = require("../auth/auth");
 
 router.post("/favourite/insert/:vehicle_id", auth.userGuard, (req, res) => {
-  const user_id = req.userInfo.user_id;
+  const user_id = req.userInfo._id;
   const vehicle_id = req.params.vehicle_id;
   const data = new Favourite({
     user_id: user_id,
@@ -21,7 +21,7 @@ router.post("/favourite/insert/:vehicle_id", auth.userGuard, (req, res) => {
 router.delete("/favourite/delete/:id", auth.userGuard, (req, res) => {
   Favourite.deleteOne({ _id: req.params.id })
     .then(() => {
-      res.staus(201).json({ msg: "Added to favourites", success: true });
+      res.status(201).json({ msg: "Added to favourites", success: true });
     })
     .catch((e) => {
       res.json({ msg: e });
@@ -29,7 +29,7 @@ router.delete("/favourite/delete/:id", auth.userGuard, (req, res) => {
 });
 
 router.get("/favourite/get", auth.userGuard, (req, res) => {
-  Review.find({ user_id: req.userInfo._id })
+  Favourite.find({ user_id: req.userInfo._id })
     .populate("vehicle_id")
     .then((favourite) => {
       if (favourite != null) {

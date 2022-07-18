@@ -3,11 +3,11 @@ const mongoose = require("mongoose");
 const Favourite = new mongoose.Schema({
   user_id: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Customer",
+    ref: "User",
   },
   vehicle_id: {
     type: mongoose.Schema.Types.ObjectId,
-    required: "Vehicle",
+    ref: "Vehicle",
   },
 });
 

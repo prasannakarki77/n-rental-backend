@@ -116,6 +116,23 @@ router.get("/article/get", (req, res) => {
       });
     });
 });
+router.get("/article/get/featured", (req, res) => {
+  Article.find({ is_featured: true })
+    .then((article) => {
+      if (article != null) {
+        res.status(201).json({
+          success: true,
+
+          data: article,
+        });
+      }
+    })
+    .catch((e) => {
+      res.json({
+        msg: e,
+      });
+    });
+});
 
 // router.get("/article/dashboard", auth.adminGuard, async (req, res) => {
 //   const articleList = await Article.find({});
