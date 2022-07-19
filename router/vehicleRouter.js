@@ -148,6 +148,23 @@ router.get("/vehicle/get", (req, res) => {
       });
     });
 });
+router.get("/vehicle/filter/:category", (req, res) => {
+  Vehicle.find({ vehicle_category: req.params.category })
+    .then((vehicle) => {
+      if (vehicle != null) {
+        res.status(201).json({
+          success: true,
+
+          data: vehicle,
+        });
+      }
+    })
+    .catch((e) => {
+      res.json({
+        msg: e,
+      });
+    });
+});
 router.get("/vehicle/get/featured", (req, res) => {
   Vehicle.find({ is_featured: true })
     .then((vehicle) => {
