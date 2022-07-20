@@ -89,7 +89,7 @@ router.put("/article/update", auth.userGuard, (req, res) => {
 router.delete("/article/delete/:id", auth.adminGuard, (req, res) => {
   Article.deleteOne({ _id: req.params.id })
     .then(() => {
-      res.json({
+      res.status(201).json({
         success: true,
         msg: "article deleted",
       });
@@ -134,11 +134,4 @@ router.get("/article/get/featured", (req, res) => {
     });
 });
 
-// router.get("/article/dashboard", auth.adminGuard, async (req, res) => {
-//   const articleList = await Article.find({});
-//   res.json({
-//     success: true,
-//     data: articleList,
-//   });
-// });
 module.exports = router;

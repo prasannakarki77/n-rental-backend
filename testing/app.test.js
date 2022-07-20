@@ -2,6 +2,7 @@ const express = require("express");
 const app = require("../app");
 const request = require("supertest");
 const userRouter = require("../router/userRouter");
+const fs = require("fs");
 const token =
   "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MmQ3OWJmOGVhZjkzYmFiNTNmYjAxNTYiLCJpYXQiOjE2NTgyOTc4NzF9.sicIsQXQLr90cJae-mfeE_KzFTEjrqjkk2Szr-j1jJI";
 
@@ -61,8 +62,14 @@ describe("PUT /user/update_profile", function () {
 //   it("profile image update test", function (done) {
 //     request(app)
 //       .put("/user/update_profile_img")
+//       .field("Content-Type", "multipart/form-data")
 //       .set("Authorization", token)
-//       .attach("user_img", "../images/1655452089782circuit-diagram_bb.png")
+//       .attach(
+//         "user_img",
+//         fs.readFileSync(
+//           "D:ProjectsAssignmentsWebN-Rental_web\testing\16562152702412018_Tesla_Model_S_75D.jpg"
+//         )
+//       )
 //       .expect("Content-Type", /json/)
 //       .expect(201, done);
 //   });
@@ -127,11 +134,99 @@ describe("PUT /vehicle/update", function () {
   });
 });
 
-
 // describe("DELETE /vehicle/delete/:id", function () {
 //   it("Delete a vehicle test", function (done) {
 //     request(app)
 //       .delete("/vehicle/62ad9910192d892c72b799ea")
+//       .expect("Content-Type", /json/)
+//       .expect(201, done);
+//   });
+// });
+
+// category router test
+
+// describe("POST /category/insert", function () {
+//   it("Insert category test", function (done) {
+//     request(app)
+//       .post("/category/insert")
+//       .set("Authorization", token)
+//       .send({
+//         category_name: "Cycle",
+//         category_desc: "Two wheeled pedal cycles",
+//       })
+//       .expect("Content-Type", /json/)
+//       .expect(201, done);
+//   });
+// });
+
+describe("GET /category/get", function () {
+  it("Get all categories test", function (done) {
+    request(app)
+      .get("/category/get")
+      .set("Authorization", token)
+      .expect("Content-Type", /json/)
+      .expect(201, done);
+  });
+});
+
+describe("PUT /category/update", function () {
+  it("Update category test", function (done) {
+    request(app)
+      .put("/category/update")
+      .set("Authorization", token)
+      .send({
+        _id: "62bd5468b935e350e732eb5c",
+        category_name: "Bike",
+        category_desc: "Two wheeled motor running bicycle",
+      })
+      .expect("Content-Type", /json/)
+      .expect(201, done);
+  });
+});
+
+// article Router test
+
+describe("GET /article/get", function () {
+  it("Get articles test", function (done) {
+    request(app)
+      .get("/article/get")
+      .expect("Content-Type", /json/)
+      .expect(201, done);
+  });
+});
+describe("GET /article/get/featured", function () {
+  it("Get featured articles test", function (done) {
+    request(app)
+      .get("/article/get/featured")
+      .expect("Content-Type", /json/)
+      .expect(201, done);
+  });
+});
+
+describe("PUT /article/update", function () {
+  it("Update article test", function (done) {
+    request(app)
+      .put("/category/update")
+      .set("Authorization", token)
+      .send({
+        _id: "62b814918ffae5a87ee38d25",
+        title: "Tesla new model in market",
+        date: "2020-12-22",
+        description:
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Libero, amet, tortor sit eros, habitasse lectus tincidunt est vulputate.Vel risus euismod viverra in ac. Leo quisque vitae duis ante dignissim et aliquam. <br/> <br/> Elementum bibendum blandit etiam purus. Praesent viverra ac sagittis elit nulla egestas dui nunc. Auctor elementum nisl in semper quis nulla. Diam sit lectus sagittis pellentesque.",
+        rich_description:
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Libero, amet, tortor sit eros, habitasse lectus tincidunt est vulputate.Vel risus euismod viverra in ac. Leo quisque vitae duis ante dignissim et aliquam. <br/> <br/> Elementum bibendum blandit etiam purus. Praesent viverra ac sagittis elit nulla egestas dui nunc. Auctor elementum nisl in semper quis nulla. Diam sit lectus sagittis pellentesque.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Libero, amet, tortor sit eros, habitasse lectus tincidunt est vulputate.Vel risus euismod viverra in ac. Leo quisque vitae duis ante dignissim et aliquam. <br/> <br/> Elementum bibendum blandit etiam purus. Praesent viverra ac sagittis elit nulla egestas dui nunc. Auctor elementum nisl in semper quis nulla. Diam sit lectus sagittis pellentesque.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Libero, amet, tortor sit eros, habitasse lectus tincidunt est vulputate.Vel risus euismod viverra in ac. Leo quisque vitae duis ante dignissim et aliquam. <br/> <br/> Elementum bibendum blandit etiam purus. Praesent viverra ac sagittis elit nulla egestas dui nunc. Auctor elementum nisl in semper quis nulla. Diam sit lectus sagittis pellentesque.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Libero, amet, tortor sit eros, habitasse lectus tincidunt est vulputate.Vel risus euismod viverra in ac. Leo quisque vitae duis ante dignissim et aliquam. <br/> <br/> Elementum bibendum blandit etiam purus. Praesent viverra ac sagittis elit nulla egestas dui nunc. Auctor elementum nisl in semper quis nulla. Diam sit lectus sagittis pellentesque.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Libero, amet, tortor sit eros, habitasse lectus tincidunt est vulputate.Vel risus euismod viverra in ac. Leo quisque vitae duis ante dignissim et aliquam. <br/> <br/> Elementum bibendum blandit etiam purus. Praesent viverra ac sagittis elit nulla egestas dui nunc. Auctor elementum nisl in semper quis nulla. Diam sit lectus sagittis pellentesque.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Libero, amet, tortor sit eros, habitasse lectus tincidunt est vulputate.Vel risus euismod viverra in ac. Leo quisque vitae duis ante dignissim et aliquam. <br/> <br/> Elementum bibendum blandit etiam purus. Praesent viverra ac sagittis elit nulla egestas dui nunc. Auctor elementum nisl in semper quis nulla. Diam sit lectus sagittis pellentesque.",
+        is_featured: true,
+      })
+      .expect("Content-Type", /json/)
+      .expect(201, done);
+  });
+});
+
+// describe("DELETE /article/delete/:id", function () {
+//   it("Delete articles test", function (done) {
+//     request(app)
+//       .delete("/article/delete/62b814918ffae5a87ee38d25")
 //       .expect("Content-Type", /json/)
 //       .expect(201, done);
 //   });

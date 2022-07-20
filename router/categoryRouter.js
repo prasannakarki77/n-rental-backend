@@ -6,7 +6,7 @@ const upload = require("../upload/upload");
 
 router.post(
   "/category/insert",
-  auth.adminGuard,
+  auth.userGuard,
   upload.single("c_img"),
   (req, res) => {
     const category_name = req.body.category_name;
@@ -19,12 +19,14 @@ router.post(
     });
     data
       .save()
-      .then(() => res.json({ msg: "Category added", success: true }))
+      .then(() =>
+        res.status(201).json({ msg: "Category added", success: true })
+      )
       .catch((e) => res.json({ msg: e }));
   }
 );
 
-router.put("/category/update", auth.adminGuard, (req, res) => {
+router.put("/category/update", auth.userGuard, (req, res) => {
   Category.updateOne(
     { _id: req.body._id },
     {
@@ -33,7 +35,7 @@ router.put("/category/update", auth.adminGuard, (req, res) => {
     }
   )
     .then(() => {
-      res.json({ msg: "Category updated", success: true });
+      res.status(201).json({ msg: "Category updated", success: true });
     })
     .catch((e) => {
       res.json({ e });
@@ -64,7 +66,7 @@ router.put(
   }
 );
 
-router.get("/category/get", auth.adminGuard, (req, res) => {
+router.get("/category/get", auth.userGuard, (req, res) => {
   Category.find()
     .then((categoryList) => {
       if (categoryList != null) {
