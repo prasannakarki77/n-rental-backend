@@ -68,3 +68,71 @@ describe("PUT /user/update_profile", function () {
 //   });
 // });
 
+// vehicle router testing
+
+describe("GET /vehicle/get", function () {
+  it("Get all Vehicles test", function (done) {
+    request(app)
+      .get("/vehicle/get")
+      .expect("Content-Type", /json/)
+      .expect(201, done);
+  });
+});
+describe("GET /vehicle/filter/:category", function () {
+  it("Get Vehicles of a category test", function (done) {
+    request(app)
+      .get("/vehicle/filter/Car")
+      .expect("Content-Type", /json/)
+      .expect(201, done);
+  });
+});
+
+describe("GET /vehicle/get/featured", function () {
+  it("Get featured vehicles test", function (done) {
+    request(app)
+      .get("/vehicle/get/featured")
+      .expect("Content-Type", /json/)
+      .expect(201, done);
+  });
+});
+
+describe("GET /vehicle/:id", function () {
+  it("Get specific vehicle test", function (done) {
+    request(app)
+      .get("/vehicle/62ad9910192d892c72b799ea")
+      .expect("Content-Type", /json/)
+      .expect(201, done);
+  });
+});
+describe("PUT /vehicle/update", function () {
+  it("Update vehicle details test", function (done) {
+    request(app)
+      .put("/vehicle/update")
+      .set("Authorization", token)
+      .send({
+        _id: "62ad9910192d892c72b799ea",
+        vehicle_name: "Yamaha MT-7",
+        vehicle_desc:
+          "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+        vehicle_rich_desc:
+          "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+        is_featured: true,
+        vehicle_company: "Yamaha",
+        vehicle_sku: "JADS122",
+        booking_cost: "2000",
+        vehicle_category: "Bike",
+      })
+      .expect("Content-Type", /json/)
+      .expect(201, done);
+  });
+});
+
+
+// describe("DELETE /vehicle/delete/:id", function () {
+//   it("Delete a vehicle test", function (done) {
+//     request(app)
+//       .delete("/vehicle/62ad9910192d892c72b799ea")
+//       .expect("Content-Type", /json/)
+//       .expect(201, done);
+//   });
+// });

@@ -81,7 +81,7 @@ router.put("/vehicle/update", auth.userGuard, (req, res) => {
     }
   )
     .then(() => {
-      res.json({ msg: "vehicle updated", success: true });
+      res.status(201).json({ msg: "vehicle updated", success: true });
     })
     .catch((e) => {
       res.json({ e });
@@ -121,7 +121,7 @@ router.put("/vehicle/update", auth.userGuard, (req, res) => {
 router.delete("/vehicle/delete/:id", auth.adminGuard, (req, res) => {
   Vehicle.deleteOne({ _id: req.params.id })
     .then(() => {
-      res.json({
+      res.status(201).json({
         success: true,
         msg: "vehicle deleted",
       });
