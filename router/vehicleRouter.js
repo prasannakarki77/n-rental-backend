@@ -195,7 +195,7 @@ router.get("/vehicle/:id", (req, res) => {
   Vehicle.findOne({ _id: req.params.id })
 
     .then((data) => {
-      res.json({ success: true, data: data });
+      res.status(201).json({ success: true, data: data });
     })
 
     .catch((e) => {

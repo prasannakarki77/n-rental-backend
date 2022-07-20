@@ -26,3 +26,5 @@ app.use(bookingRouter);
 app.use(reviewRouter);
 
 app.listen(90);
+
+module.exports = app;
