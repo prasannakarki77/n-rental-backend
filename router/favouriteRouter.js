@@ -21,7 +21,7 @@ router.post("/favourite/insert/:vehicle_id", auth.userGuard, (req, res) => {
 router.delete("/favourite/delete/:id", auth.userGuard, (req, res) => {
   Favourite.deleteOne({ _id: req.params.id })
     .then(() => {
-      res.status(201).json({ msg: "Added to favourites", success: true });
+      res.status(201).json({ msg: "Deleted from favourites", success: true });
     })
     .catch((e) => {
       res.json({ msg: e });

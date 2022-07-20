@@ -231,3 +231,118 @@ describe("PUT /article/update", function () {
 //       .expect(201, done);
 //   });
 // });
+
+// review router test
+
+// describe("POST /review/insert/:vehicle_id", function () {
+//   it("Post review test", function (done) {
+//     request(app)
+//       .post("/review/insert/62d53a5c878741c1fc2651ce")
+//       .set("Authorization", token)
+//       .send({
+//         rating: "3",
+//         review:
+//           "It was a very good condition vehicle. The ride was very fun. I would definitely rent it again",
+//       })
+//       .expect("Content-Type", /json/)
+//       .expect(201, done);
+//   });
+// });
+
+describe("GET /review/get/:id", function () {
+  it("Get vehicle reviews test", function (done) {
+    request(app)
+      .get("/review/get/62d53a5c878741c1fc2651ce")
+      .expect("Content-Type", /json/)
+      .expect(201, done);
+  });
+});
+
+// favourite router test
+
+// describe("POST /favourite/insert/:vehicle_id", function () {
+//   it("Add to favourites test", function (done) {
+//     request(app)
+//       .post("/favourite/insert/62d53a5c878741c1fc2651ce")
+//       .set("Authorization", token)
+//       .expect("Content-Type", /json/)
+//       .expect(201, done);
+//   });
+// });
+
+// describe("GET /favourite/get/", function () {
+//   it("Get favourites test", function (done) {
+//     request(app)
+//       .get("/favourite/get/")
+//       .set("Authorization", token)
+//       .expect("Content-Type", /json/)
+//       .expect(201, done);
+//   });
+// });
+
+// describe("DELETE /favourite/delete/:id", function () {
+//   it("Delete from favourites test", function (done) {
+//     request(app)
+//       .delete("/favourite/delete/62d7b44af028c41a39691dca")
+//       .set("Authorization", token)
+//       .expect("Content-Type", /json/)
+//       .expect(201, done);
+//   });
+// });
+
+// booking router tests
+
+describe("POST /booking/add/:vehicle_id", function () {
+  it("Vehicle booking test", function (done) {
+    request(app)
+      .post("/booking/add/62d53a5c878741c1fc2651ce")
+      .set("Authorization", token)
+      .send({
+        no_of_days: "2",
+        booking_date: "2020-12-02",
+        booking_time: "14:02",
+        address: "testing",
+        contact_no: "234234",
+        status: "renting",
+      })
+      .expect("Content-Type", /json/)
+      .expect(201, done);
+  });
+});
+
+describe("GET /user/booking/get", function () {
+  it("Get user's bookings test", function (done) {
+    request(app)
+      .get("/user/booking/get")
+      .set("Authorization", token)
+      .expect("Content-Type", /json/)
+      .expect(201, done);
+  });
+});
+
+describe("GET/booking/get", function () {
+  it("Get all bookings test", function (done) {
+    request(app)
+      .get("/booking/get")
+      .set("Authorization", token)
+      .expect("Content-Type", /json/)
+      .expect(201, done);
+  });
+});
+
+describe("PUT /booking/update/:id", function () {
+  it("Update booking test", function (done) {
+    request(app)
+      .put("/booking/update/62d7b6ab270e2103f967601b")
+      .set("Authorization", token)
+      .send({
+        vehicle_id: "62d53a5c878741c1fc2651ce",
+        booking_date: "2022-12-34",
+        booking_time: "7:02",
+        address: "Lalitpur",
+        contact_no: "23432234",
+      })
+      .expect("Content-Type", /json/)
+      .expect(201, done);
+  });
+});
