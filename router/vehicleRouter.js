@@ -3,10 +3,10 @@ const router = new express.Router();
 const Vehicle = require("../models/vehicleModel");
 const auth = require("../auth/auth");
 const upload = require("../upload/upload");
-// route to insert vehicle by admin
+
 router.post(
   "/vehicle/insert",
-  auth.adminGuard,
+  auth.userGuard,
   upload.single("v_img"),
   (req, res) => {
     const vehicle_name = req.body.vehicle_name;
@@ -44,7 +44,7 @@ router.post(
 
 router.put(
   "/vehicle/update_image",
-  auth.adminGuard,
+  auth.userGuard,
   upload.single("v_img"),
   (req, res) => {
     console.log(req.file);
@@ -88,37 +88,7 @@ router.put("/vehicle/update", auth.userGuard, (req, res) => {
     });
 });
 
-// router.put(
-//   "/vehicle/update",
-//   auth.adminGuard,
-//   // upload.single("v_img"),
-//   (req, res) => {
-//     // console.log(req.file);
-//     // if (req.file == undefined) {
-//     //   return res.json({ msg: "Invalid file type" });
-//     // }
-//     Vehicle.updateOne(
-//       { _id: req.body._id },
-//       {
-//         vehicle_name: req.body.vehicle_name,
-//         vehicle_desc: req.body.vehicle_desc,
-//         vehicle_company: req.body.vehicle_company,
-//         vehicle_category: req.body.vehicle_category,
-//         vehicle_sku: req.body.vehicle_sku,
-//         booking_cost: req.body.booking_cost,
-//         // vehicle_image: req.file.filename,
-//       }
-//     )
-//       .then(() => {
-//         res.json({ msg: "vehicle updated", success: true });
-//       })
-//       .catch((e) => {
-//         res.json({ e });
-//       });
-//   }
-// );
-
-router.delete("/vehicle/delete/:id", auth.adminGuard, (req, res) => {
+router.delete("/vehicle/delete/:id", auth.userGuard, (req, res) => {
   Vehicle.deleteOne({ _id: req.params.id })
     .then(() => {
       res.status(201).json({
@@ -183,7 +153,7 @@ router.get("/vehicle/get/featured", (req, res) => {
     });
 });
 
-router.get("/vehicle/dashboard", auth.adminGuard, async (req, res) => {
+router.get("/vehicle/dashboard", auth.userGuard, async (req, res) => {
   const vehicleList = await Vehicle.find({});
   res.json({
     success: true,

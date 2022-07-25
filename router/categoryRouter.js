@@ -44,7 +44,7 @@ router.put("/category/update", auth.userGuard, (req, res) => {
 
 router.put(
   "/category/update_image",
-  auth.adminGuard,
+  auth.userGuard,
   upload.single("c_img"),
   (req, res) => {
     console.log(req.file);
@@ -84,7 +84,7 @@ router.get("/category/get", auth.userGuard, (req, res) => {
     });
 });
 
-router.delete("/category/delete/:id", auth.adminGuard, (req, res) => {
+router.delete("/category/delete/:id", auth.userGuard, (req, res) => {
   Category.deleteOne({ _id: req.params.id })
     .then(() => {
       res.json({ msg: "Category deleted", success: true });

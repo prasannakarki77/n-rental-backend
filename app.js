@@ -9,7 +9,6 @@ require("./db_connection/dbconnection");
 
 //Importing Router // Modules are already in routes
 const userRouter = require("./router/userRouter");
-const adminRouter = require("./router/adminRouter");
 const vehicleRouter = require("./router/vehicleRouter");
 const categoryRouter = require("./router/categoryRouter");
 const favouriteRouter = require("./router/favouriteRouter");
@@ -17,7 +16,6 @@ const articleRouter = require("./router/articleRouter");
 const bookingRouter = require("./router/bookingRouter");
 const reviewRouter = require("./router/reviewRouter");
 app.use(userRouter);
-app.use(adminRouter);
 app.use(vehicleRouter);
 app.use(categoryRouter);
 app.use(favouriteRouter);

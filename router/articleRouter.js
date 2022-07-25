@@ -6,7 +6,7 @@ const upload = require("../upload/upload");
 
 router.post(
   "/article/insert",
-  auth.adminGuard,
+  auth.userGuard,
   upload.single("a_img"),
   (req, res) => {
     const data = new Article({
@@ -31,7 +31,7 @@ router.post(
 
 router.put(
   "/article/update_image",
-  auth.adminGuard,
+  auth.userGuard,
   upload.single("a_img"),
   (req, res) => {
     console.log(req.file);
@@ -86,7 +86,7 @@ router.put("/article/update", auth.userGuard, (req, res) => {
     });
 });
 
-router.delete("/article/delete/:id", auth.adminGuard, (req, res) => {
+router.delete("/article/delete/:id", auth.userGuard, (req, res) => {
   Article.deleteOne({ _id: req.params.id })
     .then(() => {
       res.status(201).json({

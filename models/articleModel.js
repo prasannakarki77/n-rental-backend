@@ -1,6 +1,4 @@
 const mongoose = require("mongoose");
-
-//User Model Collection Create
 const Article = new mongoose.Schema({
   title: {
     type: String,

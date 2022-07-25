@@ -1,6 +1,4 @@
 const mongoose = require("mongoose");
-
-//User Model Collection Create
 const Vehicle = new mongoose.Schema({
   vehicle_name: {
     type: String,
@@ -37,10 +35,7 @@ const Vehicle = new mongoose.Schema({
     type: String,
     required: true,
   },
-
-  //   userId:{
-  //       type: mongoose.Schema.Types.ObjectId,
-  //       ref: 'Customer'
-  //   }
 });
 module.exports = mongoose.model("Vehicle", Vehicle);
+
+

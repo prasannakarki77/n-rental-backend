@@ -7,7 +7,7 @@ const Review = new mongoose.Schema({
   },
   vehicle_id: {
     type: mongoose.Schema.Types.ObjectId,
-    required: "Vehicle",
+    ref: "Vehicle",
   },
   rating: {
     type: String,

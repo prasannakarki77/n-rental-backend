@@ -1,6 +1,4 @@
 const mongoose = require("mongoose");
-
-//User Model Collection Create
 const User = new mongoose.Schema({
   firstname: {
     type: String,
@@ -39,3 +37,5 @@ const User = new mongoose.Schema({
   },
 });
 module.exports = mongoose.model("User", User);
+
+
