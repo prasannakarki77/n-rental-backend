@@ -18,7 +18,6 @@ router.post(
     const booking_cost = req.body.booking_cost;
     const vehicle_sku = req.body.vehicle_sku;
     const vehicle_image = req.file.filename;
-    // const userId = req.customerInfo._id;
     const data = new Vehicle({
       vehicle_name: vehicle_name,
       vehicle_category: vehicle_category,
@@ -29,7 +28,6 @@ router.post(
       vehicle_sku: vehicle_sku,
       booking_cost: booking_cost,
       vehicle_image: vehicle_image,
-      //   userId: userId
     });
     data
       .save()

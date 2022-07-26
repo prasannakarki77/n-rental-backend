@@ -1,9 +1,11 @@
 const express = require("express");
 const cors = require("cors");
+const morgan = require("morgan");
 const app = express();
 app.use(express.json());
 app.use(cors());
 app.use(express.static(__dirname + "/images"));
+app.use(morgan("tiny"));
 // Importing DB Connection
 require("./db_connection/dbconnection");
 

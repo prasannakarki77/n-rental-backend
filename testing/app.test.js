@@ -1,28 +1,25 @@
-const express = require("express");
 const app = require("../app");
 const request = require("supertest");
-const userRouter = require("../router/userRouter");
-const fs = require("fs");
 const token =
   "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MmQ3OWJmOGVhZjkzYmFiNTNmYjAxNTYiLCJpYXQiOjE2NTgyOTc4NzF9.sicIsQXQLr90cJae-mfeE_KzFTEjrqjkk2Szr-j1jJI";
 
 // User Router testting
 
-// describe("POST /user/register", function () {
-//   it("User register test", function (done) {
-//     request(app)
-//       .post("/user/register")
-//       .send({
-//         username: "user122",
-//         password: "user122",
-//         email: "user122@gmai.com",
-//         userType: "user",
-//         phone: "324234234",
-//       })
-//       .expect("Content-Type", /json/)
-//       .expect(201, done);
-//   });
-// });
+describe("POST /user/register", function () {
+  it("User register test", function (done) {
+    request(app)
+      .post("/user/register")
+      .send({
+        username: "user1223",
+        password: "user1223",
+        email: "user122@gmai.com",
+        userType: "user",
+        phone: "324234234",
+      })
+      .expect("Content-Type", /json/)
+      .expect(201, done);
+  });
+});
 
 describe("POST /user/login", function () {
   it("User login test", function (done) {
@@ -58,22 +55,6 @@ describe("PUT /user/update_profile", function () {
       .expect(201, done);
   });
 });
-// describe("PUT /user/update_profile_img", function () {
-//   it("profile image update test", function (done) {
-//     request(app)
-//       .put("/user/update_profile_img")
-//       .field("Content-Type", "multipart/form-data")
-//       .set("Authorization", token)
-//       .attach(
-//         "user_img",
-//         fs.readFileSync(
-//           "D:ProjectsAssignmentsWebN-Rental_web\testing\16562152702412018_Tesla_Model_S_75D.jpg"
-//         )
-//       )
-//       .expect("Content-Type", /json/)
-//       .expect(201, done);
-//   });
-// });
 
 // vehicle router testing
 
@@ -134,30 +115,30 @@ describe("PUT /vehicle/update", function () {
   });
 });
 
-// describe("DELETE /vehicle/delete/:id", function () {
-//   it("Delete a vehicle test", function (done) {
-//     request(app)
-//       .delete("/vehicle/62ad9910192d892c72b799ea")
-//       .expect("Content-Type", /json/)
-//       .expect(201, done);
-//   });
-// });
+describe("DELETE /vehicle/delete/:id", function () {
+  it("Delete a vehicle test", function (done) {
+    request(app)
+      .delete("/vehicle/62de36c4521c77297d3c12cc")
+      .expect("Content-Type", /json/)
+      .expect(201, done);
+  });
+});
 
 // category router test
 
-// describe("POST /category/insert", function () {
-//   it("Insert category test", function (done) {
-//     request(app)
-//       .post("/category/insert")
-//       .set("Authorization", token)
-//       .send({
-//         category_name: "Cycle",
-//         category_desc: "Two wheeled pedal cycles",
-//       })
-//       .expect("Content-Type", /json/)
-//       .expect(201, done);
-//   });
-// });
+describe("POST /category/insert", function () {
+  it("Insert category test", function (done) {
+    request(app)
+      .post("/category/insert")
+      .set("Authorization", token)
+      .send({
+        category_name: "Cycle",
+        category_desc: "Two wheeled pedal cycles",
+      })
+      .expect("Content-Type", /json/)
+      .expect(201, done);
+  });
+});
 
 describe("GET /category/get", function () {
   it("Get all categories test", function (done) {
@@ -223,36 +204,36 @@ describe("PUT /article/update", function () {
   });
 });
 
-// describe("DELETE /article/delete/:id", function () {
-//   it("Delete articles test", function (done) {
-//     request(app)
-//       .delete("/article/delete/62b814918ffae5a87ee38d25")
-//       .expect("Content-Type", /json/)
-//       .expect(201, done);
-//   });
-// });
+describe("DELETE /article/delete/:id", function () {
+  it("Delete articles test", function (done) {
+    request(app)
+      .delete("/article/delete/62dd6213469ee0a7708c6c7c")
+      .expect("Content-Type", /json/)
+      .expect(201, done);
+  });
+});
 
 // review router test
 
-// describe("POST /review/insert/:vehicle_id", function () {
-//   it("Post review test", function (done) {
-//     request(app)
-//       .post("/review/insert/62d53a5c878741c1fc2651ce")
-//       .set("Authorization", token)
-//       .send({
-//         rating: "3",
-//         review:
-//           "It was a very good condition vehicle. The ride was very fun. I would definitely rent it again",
-//       })
-//       .expect("Content-Type", /json/)
-//       .expect(201, done);
-//   });
-// });
+describe("POST /review/insert/:vehicle_id", function () {
+  it("Post review test", function (done) {
+    request(app)
+      .post("/review/insert/62ad9910192d892c72b799ea")
+      .set("Authorization", token)
+      .send({
+        rating: "3",
+        review:
+          "It was a very good condition vehicle. The ride was very fun. I would definitely rent it again",
+      })
+      .expect("Content-Type", /json/)
+      .expect(201, done);
+  });
+});
 
 describe("GET /review/get/:id", function () {
   it("Get vehicle reviews test", function (done) {
     request(app)
-      .get("/review/get/62d53a5c878741c1fc2651ce")
+      .get("/review/get/62ad9910192d892c72b799ea")
       .expect("Content-Type", /json/)
       .expect(201, done);
   });
@@ -260,42 +241,42 @@ describe("GET /review/get/:id", function () {
 
 // favourite router test
 
-// describe("POST /favourite/insert/:vehicle_id", function () {
-//   it("Add to favourites test", function (done) {
-//     request(app)
-//       .post("/favourite/insert/62d53a5c878741c1fc2651ce")
-//       .set("Authorization", token)
-//       .expect("Content-Type", /json/)
-//       .expect(201, done);
-//   });
-// });
+describe("POST /favourite/insert/:vehicle_id", function () {
+  it("Add to favourites test", function (done) {
+    request(app)
+      .post("/favourite/insert/62ad9910192d892c72b799ea")
+      .set("Authorization", token)
+      .expect("Content-Type", /json/)
+      .expect(201, done);
+  });
+});
 
-// describe("GET /favourite/get/", function () {
-//   it("Get favourites test", function (done) {
-//     request(app)
-//       .get("/favourite/get/")
-//       .set("Authorization", token)
-//       .expect("Content-Type", /json/)
-//       .expect(201, done);
-//   });
-// });
+describe("GET /favourite/get/", function () {
+  it("Get favourites test", function (done) {
+    request(app)
+      .get("/favourite/get/")
+      .set("Authorization", token)
+      .expect("Content-Type", /json/)
+      .expect(201, done);
+  });
+});
 
-// describe("DELETE /favourite/delete/:id", function () {
-//   it("Delete from favourites test", function (done) {
-//     request(app)
-//       .delete("/favourite/delete/62d7b44af028c41a39691dca")
-//       .set("Authorization", token)
-//       .expect("Content-Type", /json/)
-//       .expect(201, done);
-//   });
-// });
+describe("DELETE /favourite/delete/:id", function () {
+  it("Delete from favourites test", function (done) {
+    request(app)
+      .delete("/favourite/delete/62da56f0a30bea8efd7bdcfe")
+      .set("Authorization", token)
+      .expect("Content-Type", /json/)
+      .expect(201, done);
+  });
+});
 
 // booking router tests
 
 describe("POST /booking/add/:vehicle_id", function () {
   it("Vehicle booking test", function (done) {
     request(app)
-      .post("/booking/add/62d53a5c878741c1fc2651ce")
+      .post("/booking/add/62ad9910192d892c72b799ea")
       .set("Authorization", token)
       .send({
         no_of_days: "2",
@@ -333,7 +314,7 @@ describe("GET/booking/get", function () {
 describe("PUT /booking/update/:id", function () {
   it("Update booking test", function (done) {
     request(app)
-      .put("/booking/update/62d7b6ab270e2103f967601b")
+      .put("/booking/update/62ad9910192d892c72b799ea")
       .set("Authorization", token)
       .send({
         vehicle_id: "62d53a5c878741c1fc2651ce",

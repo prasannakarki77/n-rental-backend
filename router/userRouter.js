@@ -1,7 +1,6 @@
 const express = require("express");
 const bcryptjs = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const app = express();
 const router = new express.Router();
 const auth = require("../auth/auth");
 const upload = require("../upload/upload");
@@ -83,8 +82,6 @@ router.delete("/booking/delete", auth.userGuard, (req, res) => {
 
 // Dashboard router for admin
 router.get("/user/dashboard", auth.userGuard, (req, res) => {
-  //console.log(req.adminInfo.full_name);
-  // res.json(req.adminInfo)
   res.status(201).json({
     firstname: req.userInfo.firstname,
     lastname: req.userInfo.lastname,
@@ -99,8 +96,6 @@ router.get("/user/dashboard", auth.userGuard, (req, res) => {
 });
 // Dashboard router for admin
 router.get("/user/get", auth.userGuard, (req, res) => {
-  //console.log(req.adminInfo.full_name);
-  // res.json(req.adminInfo)
   res.status(201).json({
     success: true,
     data: {
