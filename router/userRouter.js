@@ -56,8 +56,11 @@ router.post("/user/register", (req, res) => {
 router.post("/user/login", (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
+  console.log(username);
+  console.log(password);
   User.findOne({ username: username })
     .then((user_data) => {
+      console.log(user_data);
       if (user_data == null) {
         res.json({ msg: "Invalid Credentials" });
         return;
