@@ -6,6 +6,7 @@ app.use(express.json());
 app.use(cors());
 app.use(express.static(__dirname + "/images"));
 app.use(morgan("tiny"));
+require("dotenv").config();
 // Importing DB Connection
 require("./db_connection/dbconnection");
 
@@ -25,6 +26,6 @@ app.use(articleRouter);
 app.use(bookingRouter);
 app.use(reviewRouter);
 
-app.listen(90);
+app.listen(process.env.PORT || 90);
 
 module.exports = app;
